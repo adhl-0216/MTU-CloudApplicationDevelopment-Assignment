@@ -3,14 +3,15 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "docker_image" {
-  description = "Full container image name and tag (e.g. username/image:tag)"
+variable "target_group_arn" {
+  description = "ARN of the ALB target group"
   type        = string
 }
 
 variable "aws_region" {
-  description = "AWS region to deploy resources in"
+  description = "AWS region"
   type        = string
+  default     = "us-east-1"
 }
 
 variable "vpc_id" {
@@ -19,11 +20,11 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  description = "List of subnet IDs where resources will be created"
+  description = "List of subnet IDs where EC2 instances will be launched"
   type        = list(string)
 }
 
-variable "lab_role_arn" {
-  description = "ARN of the AWS Learner Lab Role"
+variable "log_group_name" {
+  description = "Name of the CloudWatch Log Group"
   type        = string
 }

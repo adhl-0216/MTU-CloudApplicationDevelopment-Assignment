@@ -8,7 +8,17 @@ output "cluster_id" {
   value       = module.ecs.cluster_id
 }
 
+output "cluster_name" {
+  description = "Name of the ECS cluster"
+  value       = module.ecs.cluster_name
+}
+
 output "service_name" {
   description = "Name of the ECS service"
   value       = module.ecs.service_name
+}
+
+output "log_group_name" {
+  description = "Name of the CloudWatch Log Group"
+  value       = module.logging.log_group_name
 }
