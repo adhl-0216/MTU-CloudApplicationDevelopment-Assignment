@@ -1,37 +1,26 @@
-variable "environment" {
-  type = string
-  default= "staging"
+variable "docker_image" {
+  description = "Full container image name and tag (e.g. username/image:tag)"
+  type        = string
+  default     = "adhlo216/petclinic:latest"
 }
 
-variable "image_tag" {
-  type    = string
-  default = "latest"
+variable "aws_region" {
+  description = "AWS region to deploy resources in"
+  type        = string
+  default     = "us-east-1"
 }
 
-variable "dockerhub_username" {
-  type    = string
-  default = "adhlo216"
+data "aws_vpc" "default" {
+  default = true
 }
 
-variable "labrole_arn" {
-  type = string
-  default = "arn:aws:iam::215262883158:role/LabRole"
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
-variable "vpc_id" {
-  type    = string
-  default = "vpc-0dbb8d966ba500adb"
-}
-
-variable "subnet_ids" {
-  description = "List of subnet IDs for ECS service"
-  type        = list(string)
-  default = [
-    "subnet-0bf83b18a617f4b33",
-    "subnet-0e0eaedd336f971e3",
-    "subnet-091765090f534e073",
-    "subnet-0ce390d316b25b702",
-    "subnet-013444a856452b902",
-    "subnet-052e2ceaea77ebb20"
-  ]
+data "aws_iam_role" "lab_role" {
+  name = "LabRole"
 }
