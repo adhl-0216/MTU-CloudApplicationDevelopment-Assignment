@@ -1,7 +1,7 @@
 variable "docker_image" {
   description = "Full container image name and tag (e.g. username/image:tag)"
   type        = string
-  default     = "adhlo216/petclinic:latest"
+  default     = "215262883158.dkr.ecr.us-east-1.amazonaws.com/mtu-cad/petclinic:latest"
 }
 
 variable "aws_region" {

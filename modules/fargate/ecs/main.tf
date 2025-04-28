@@ -12,13 +12,12 @@ resource "aws_ecs_task_definition" "app" {
   execution_role_arn       = var.lab_role_arn
   task_role_arn            = var.lab_role_arn
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 256
+  cpu                      = 1024
   memory                   = 2048
 
   container_definitions = jsonencode([{
     name  = "petclinic"
     image = "${var.docker_image}"
-    # essential = true
     portMappings = [
       {
         containerPort = 8080
@@ -45,14 +44,15 @@ resource "aws_ecs_service" "app" {
   launch_type     = "FARGATE"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
-  desired_count   = 7
+  desired_count   = 3
 
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
 
   network_configuration {
-    security_groups = [var.tasks_security_group_id]
-    subnets         = var.subnet_ids
+    assign_public_ip = true
+    security_groups  = [var.tasks_security_group_id]
+    subnets          = var.subnet_ids
   }
 
   load_balancer {

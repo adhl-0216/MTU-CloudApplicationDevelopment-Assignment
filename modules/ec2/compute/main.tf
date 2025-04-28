@@ -39,7 +39,7 @@ resource "aws_security_group" "instances" {
 resource "aws_launch_template" "ecs" {
   name_prefix   = "ecs-launch-template"
   image_id      = data.aws_ami.ecs_ami.id
-  instance_type = "t2.medium"
+  instance_type = "t3.medium"
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
@@ -78,9 +78,9 @@ resource "aws_autoscaling_group" "ecs" {
   name                = "ecs-asg"
   vpc_zone_identifier = var.subnet_ids
   health_check_type   = "EC2"
-  desired_capacity    = 4
-  max_size            = 8
-  min_size            = 4
+  desired_capacity    = 2
+  min_size            = 2
+  max_size            = 4
 
   launch_template {
     id      = aws_launch_template.ecs.id

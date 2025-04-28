@@ -11,8 +11,8 @@ resource "aws_ecs_task_definition" "app" {
   network_mode       = "awsvpc"
   execution_role_arn = var.lab_role_arn
   task_role_arn      = var.lab_role_arn
-  cpu                = 256
-  memory             = 2048
+  cpu                = 1024
+  memory             = 1536
 
   container_definitions = jsonencode([{
     name  = "petclinic"
@@ -42,7 +42,7 @@ resource "aws_ecs_service" "app" {
   name            = "ecs-ec2-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
-  desired_count   = 7
+  desired_count   = 3
 
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
